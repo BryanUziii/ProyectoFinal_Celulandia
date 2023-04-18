@@ -84,5 +84,83 @@ ProductosDb.activarDesactivar = function activarDesactivar(ID) {
 };
 
 //
+// FUNCIONES PARA ADMINISTRADOR PAGINA DE VENTAS REALIZADAS
+ProductosDb.allVentas = function allVentas() {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = "SELECT * FROM Venta";
+    conexion.query(sqlConsulta, function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+ProductosDb.buscarVentaPorId = function buscarVentaPorId(ID) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = "SELECT * FROM Venta WHERE ID = ?";
+    conexion.query(sqlConsulta, [ID], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+ProductosDb.buscarVentaPorFecha = function buscarVentaPorFecha(Fecha) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = "SELECT * FROM Venta WHERE Fecha = ?";
+    conexion.query(sqlConsulta, [Fecha], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+ProductosDb.buscarVentaEntreFechas = function buscarVentaEntreFechas(Fecha1, Fecha2) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = "SELECT * FROM Venta WHERE Fecha BETWEEN ? AND ?";
+    conexion.query(sqlConsulta, [Fecha1, Fecha2], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+ProductosDb.buscarVentaPorTotal = function buscarVentaPorTotal(Comparador, Total) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = `SELECT * FROM Venta WHERE Total ${Comparador}= ?`;
+    conexion.query(sqlConsulta, [Total], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+ProductosDb.obtenerTicket = function obtenerTicket(ID) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = `CALL ObtenerTicket(?)`;
+    conexion.query(sqlConsulta, [ID], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
 
 module.exports = ProductosDb; //ESTE SIEMPRE AL FINAL Y NO SE BORRA
