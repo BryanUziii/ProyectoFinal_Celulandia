@@ -194,6 +194,95 @@ ProductosDb.iniciarSesion = function iniciarSesion(username, contraseña) {
   });
 };
 
+// FUNCIONES PARA LA PAGINA PRINCIPAL EN ESPECIFICO PARA PRODUCTOS
+ProductosDb.mostrarEnPagPrincipal = function mostrarEnPagPrincipal() {
+  return new Promise((resolve, reject) => {
+    conexion.query('SELECT ID, Marca, Modelo, Capacidad, Precio, Cantidad, Imagen FROM Productos WHERE Estado = 1 AND Eliminado = 0', function(error, res) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+// Este es para saber que ID de ventas es el siguiente
+ProductosDb.buscarIDVentas = function buscarIDVentas() {
+  return new Promise((resolve, reject) => {
+    conexion.query(
+      "SELECT MAX(ID) as ultimoIDVenta FROM Venta",
+      function (error, resultados) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(resultados);
+        }
+      }
+    );
+  });
+};
+
+// Para mostrar buscar por ID (Carrito)
+ProductosDb.buscarPorId = function buscarPorId(ID) {
+  return new Promise((resolve, reject) => {
+    // Se define la consulta SQL para realizar corte de caja
+    var sqlConsulta = "SELECT * FROM Productos WHERE ID = ?";
+    conexion.query(sqlConsulta, [ID], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+// (Carrito)
+ProductosDb.crearVenta = function crearVenta(UsuarioID) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta =
+      "INSERT INTO Venta (Fecha, Total, UsuarioID) VALUES (CURDATE(), 0, ?);";
+    conexion.query(sqlConsulta,[UsuarioID], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+// (Carrito)
+ProductosDb.realizarVenta = function realizarVenta(idVenta, productos, metodoPago) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = 
+    "INSERT INTO DetalleVenta (VentaID, ProductoID, Cantidad, PrecioUnitario, Subtotal, MetodoPago)VALUES (?, ?, ?, ?, ?, ?);";
+    productos.forEach((producto) => {
+      conexion.query(
+        sqlConsulta,
+        [
+          idVenta,
+          producto.id,
+          producto.cantidad,
+          producto.precio,
+          producto.cantidad * producto.precio,
+          metodoPago,
+        ],
+        function (err, res) {
+          if (err) {
+            console.log("Surgió un error: ", err);
+            reject(err);
+          } else {
+            console.log("Venta realizada");
+          }
+        }
+      );
+    });
+    resolve();
+  });
+};
+
 
 
 module.exports = ProductosDb; //ESTE SIEMPRE AL FINAL Y NO SE BORRA

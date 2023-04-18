@@ -277,6 +277,55 @@ router.post("/iniciarSesion", async (req, res) => {
 });
 
 
+//METODOS PARA USUARIO (PAGINA PRINCIPAL)
+router.get("/mostrarProductosActivos", async (req, res) => {
+  try {
+    resultado = await ProductosDb.mostrarEnPagPrincipal();
+    res.json(resultado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al cargar la lista de productos.");
+  }
+});
+
+//CARRITO
+router.get("/buscarIDVentas", async (req, res) => {
+  try {
+    resultado = await ProductosDb.buscarIDVentas();
+    res.json(resultado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al obtener el ID.");
+  }
+});
+
+router.get("/buscarPorId", async (req, res) => {
+  const ID = req.query.ID;
+  try {
+    resultado = await ProductosDb.buscarPorId(ID);
+    res.json(resultado);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al cargar la lista de productos.");
+  }
+});
+
+router.post("/realizarVenta", async (req, res) => {
+  try {
+    await ProductosDb.crearVenta(req.body.usuarioId);
+    await ProductosDb.realizarVenta(
+      req.body.idVenta,
+      req.body.productos,
+      req.body.metodoPago
+    );
+    res.send(`Compra Realizada Con Éxito`);
+  } catch (error) {
+    console.error("Error en la compra:", error);
+    res.status(500).send("Error en la compra");
+  }
+});
+
+
 //
 // Exportar el módulo Router para que pueda ser utilizado en otros archivos
 module.exports = router;//ESTE SIEMPRE AL FINAL Y NO SE BORRA
