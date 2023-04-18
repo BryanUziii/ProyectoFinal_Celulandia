@@ -42,6 +42,27 @@ router.get("/admin_ventas", async (req, res) => {
   res.render("administrador_ventas.html");
 });
 
+//Vistas del usuario
+router.get("/pagPrincipal", async (req, res) => {
+  res.render("paginaPrincipal.html");
+});
+
+router.get("/pagPrincipal_productos", async (req, res) => {
+  res.render("paginaPrincipal_Productos.html");
+});
+
+router.get("/pagPrincipal_contacto", async (req, res) => {
+  res.render("paginaPrincipal_Contacto.html");
+});
+
+router.get("/pagPrincipal_signup", async (req, res) => {
+  res.render("paginaPrincipal_signup.html");
+});
+
+router.get("/pagPrincipal_login", async (req, res) => {
+  res.render("paginaPrincipal_login.html");
+});
+
 //METODOS PARA ADMINISTRADOR
 router.get("/mostrarProductosAdmin", async (req, res) => {
   try {
@@ -218,5 +239,44 @@ router.post("/obtenerTicket", async (req, res) => {
   }
 });
 
+//USUARIOS
+router.post("/crearUsuario", async (req, res) => {
+  let username = req.body.username;
+  let contraseña = req.body.contraseña;
+  let telefono = req.body.telefono;
+  let domicilio = req.body.domicilio;
+  let email = req.body.email;
+
+  ProductosDb.crearUsuario(username, contraseña, telefono, domicilio, email)
+    .then(() => {
+      res.send(`Usuario creado con éxito`);
+    })
+    .catch((error) => {
+      console.error("Error al crear usuario:", error);
+
+      if (error.errno == 1062) {
+        res.status(500).send(`El nombre de usuario '${username}' ya existe`);
+      } else {
+        res.status(500).send(`Error al crear usuario: ${error.message}`);
+      }
+    });
+});
+
+router.post("/iniciarSesion", async (req, res) => {
+  let username = req.body.username;
+  let contraseña = req.body.contraseña;
+
+  ProductosDb.iniciarSesion(username, contraseña)
+    .then((resultados) => {
+      res.json(resultados);
+    })
+    .catch((error) => {
+      console.error("Error al iniciar sesión:", error);
+      res.status(500).send("Nombre de usuario o contraseña incorrectos");
+    });
+});
+
+
+//
 // Exportar el módulo Router para que pueda ser utilizado en otros archivos
 module.exports = router;//ESTE SIEMPRE AL FINAL Y NO SE BORRA

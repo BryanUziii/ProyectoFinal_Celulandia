@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/6804/6804506.png">
+
+
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+      .ocultar{
+        display: none;
+      }
+
+    </style>
+</head>
+<body class="background">
+  <header>
+    <div class="">
+        <h3 class="titulo">
+            <a href="/pagPrincipal" title="IR A LA PAGINA PRINCIPAL">Celulandia</a>
+        </h3>
+        <div class="divIniciarSesion">
+          <div id="btnsIniciarSesion" class="">
+            <div class="IniciarSesion" >
+              <a class="btns logIn" href="/pagPrincipal_login">Iniciar Sesion</a>
+              <a class="btns signUp" href="/pagPrincipal_signup">Registrarse</a>
+         
+            </div>
+          </div>
+
+          <div id="btnCerrarSesion" class="ocultar">
+            <div id="msgUsuario" class="msgUsuario ">
+              <div class="centrarDiv">
+                <span>Usuario: <span id="nombreUsuario"></span></span>
+              </div>
+                <a class="btns btnSalir" onclick="cerrarSesión()">Cerrar Sesión</a>
+              </div>
+          </div>
+      </div>
+
+
+        <div class="navBar">
+            <div class="button-row">
+                <div><a title="INICIO" href="/pagPrincipal"></a></div>
+                <div><a title="PRODUCTOS" class="active" href=""></a></div>
+                <div><a title="CONTACTO" href="/pagPrincipal_contacto"></a></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<div class="carrito centrarDiv">
+  <!-- Button trigger modal -->
+  <button type="button" class="btnVerCarrito" data-bs-toggle="modal" data-bs-target="#MostrarCarrito" onclick="MostrarContenidoCarrito()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </svg>
+    Ver El Carrito
+  </button>
+  </div>
+
+
+
+
+  <footer>
+    <small>UPSIN 2023©</small>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
+<script src="/js/cerrarSesion.js"></script>
+
+</body>
+
+</html>
