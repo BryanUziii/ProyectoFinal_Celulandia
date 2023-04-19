@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(function (response) {
       // La lista de ventas
       const allVentas = response.data;
+      console.log(response.data);
 
       // Llamada a una función
         mostrarVentas(allVentas);
@@ -52,7 +53,7 @@ let imprimirTabla = (mostrarVentas) => {
     fechaElement.textContent = fechaCorregida;
 
     let totalElement = card.querySelector("#tablaVentas-total");
-    totalElement.textContent = `$${venta.Total}`;
+    totalElement.textContent = `$${venta.Total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
     let boton = card.getElementById("tablaVentas-btnVerDatos");
      boton.setAttribute("value", `${venta.ID}`);
@@ -311,13 +312,14 @@ let mostrarTicket = (boton) =>{
                 let precioProductoElement = listaProductos.querySelector(
                   "#ticket-productoPrecio"
                 );
-                precioProductoElement.textContent = `$${venta.Subtotal}`;
+                precioProductoElement.textContent = `$${venta.Subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
                 container2.appendChild(listaProductos);
               }
 
-              document.getElementById("ticket-total").innerHTML =
-                datosDeVenta[0].Total;
+              document.getElementById(
+                "ticket-total"
+              ).innerHTML = `${datosDeVenta[0].Total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
             }
           })
           .catch((error) => {

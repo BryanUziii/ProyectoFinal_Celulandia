@@ -40,13 +40,24 @@ let inicarSesión = async () => {
       contraseña: contraseña,
     })
     .then(function (response) {
-      usuario = response.data[0];
-      alert(`¡Hola ${response.data[0].Nombre}! ¡Gracias por iniciar sesión! `);
-      // Almacenar datos del usuario en el almacenamiento local del navegador
-      localStorage.setItem("usuario", JSON.stringify(usuario));
-      // Redirigir a la página de productos
-      window.location.href = "/pagPrincipal_productos";
-      // window.location.href = "/html/paginaPrincipal_Productos.html";
+
+      if (response.data[0].TipoUsuario == 'Admin'){
+        alert(
+          `¡Hola ${response.data[0].Nombre}! ¡Bienvenido de vuelta! `
+        );
+          window.location.href = "/admin";
+      } else {
+        usuario = response.data[0];
+        alert(
+          `¡Hola ${response.data[0].Nombre}! ¡Gracias por iniciar sesión! `
+        );
+        // Almacenar datos del usuario en el almacenamiento local del navegador
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+        // Redirigir a la página de productos
+        window.location.href = "/pagPrincipal_productos";
+        // window.location.href = "/html/paginaPrincipal_Productos.html";
+      }
+
     })
     .catch(function (error) {
       // Manejar errores de solicitud

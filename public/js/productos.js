@@ -135,8 +135,8 @@ class CarritoDeCompras {
 
     container.appendChild(card);
 
-    // Actualizar el total en el carrito
-    totalCarrito.innerHTML = `$${this.total}`;
+      // Actualizar el total en el carrito
+      totalCarrito.innerHTML = `$${this.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
   }
 
   modificarCantidadAComprar(id, cantidadNew) {
@@ -154,7 +154,7 @@ class CarritoDeCompras {
         producto.cantidad = cantidadNew;
 
         // Actualizar el elemento HTML que muestra el total del carrito
-        totalCarrito.innerHTML = `$${this.total}`;
+        totalCarrito.innerHTML = `$${this.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
         // Limpiar la consola y mostrar el contenido actualizado del carrito
         console.clear();
@@ -182,7 +182,7 @@ class CarritoDeCompras {
       this.productos.splice(index, 1);
 
       // Actualizar el elemento HTML que muestra el total del carrito
-      totalCarrito.innerHTML = `$${this.total}`;
+      totalCarrito.innerHTML = `$${this.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
       // Limpiar la consola y mostrar el contenido actualizado del carrito
       this.mostrarContenido();
@@ -399,3 +399,7 @@ let modificarCantidadCarrito = (boton, operacion) => {
 };
 
 
+function formatearNumero(numero) {
+  console.log(numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  return numero.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

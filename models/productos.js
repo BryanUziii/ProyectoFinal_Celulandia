@@ -58,7 +58,7 @@ ProductosDb.actualizarProducto = function actualizarProducto(datoActualizar,colu
 
 ProductosDb.eliminarProducto = function eliminarProducto(ID) {
   return new Promise((resolve, reject) => {
-    var sqlConsulta = "UPDATE Productos SET Eliminado = true WHERE ID = ?";
+    var sqlConsulta = "UPDATE Productos SET Estado = 0,Eliminado = 1 WHERE ID = ?";
     conexion.query(sqlConsulta, [ID], function (err, res) {
       if (err) {
         console.log("Surgió un error: ", err);
@@ -179,7 +179,8 @@ ProductosDb.crearUsuario = function crearUsuario(username, contraseña, telefono
 
 ProductosDb.iniciarSesion = function iniciarSesion(username, contraseña) {
   return new Promise((resolve, reject) => {
-    var sqlConsulta = "SELECT ID, Nombre FROM Usuarios WHERE Nombre = ? AND Contrasena = ?";
+    var sqlConsulta =
+      "SELECT ID, Nombre, TipoUsuario FROM Usuarios WHERE Nombre = ? AND Contrasena = ?";
     conexion.query(sqlConsulta, [username, contraseña], function (err, res) {
       if (err) {
         reject(err);

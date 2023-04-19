@@ -68,7 +68,7 @@ let mostrarProductos = (productos) => {
     btnActualizarCapacidad.value = producto.ID;
 
     const precioElement = card.querySelector("#Precio");
-    precioElement.textContent = "$" + producto.Precio;
+    precioElement.textContent = `$${producto.Precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
     const btnActualizarPrecio = card.querySelector("#btnActualizarPrecio");
     btnActualizarPrecio.value = producto.ID;
 
