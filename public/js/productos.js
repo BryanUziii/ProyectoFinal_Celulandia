@@ -62,7 +62,8 @@ let mostrarProductos = (productos) => {
     capacidadElement.textContent = producto.Capacidad;
 
     let precioElement = card.querySelector("#Precio");
-    precioElement.textContent = "$" + producto.Precio;
+    precioElement.textContent = `$${producto.Precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+    
 
     let cantidadElement = card.querySelector("#Cantidad");
     cantidadElement.textContent = producto.Cantidad;
@@ -119,7 +120,7 @@ class CarritoDeCompras {
     nombreElement.textContent = `${producto.nombre} | ${producto.capacidad}`;
 
     const precioElement = card.querySelector("#carrito-Precio");
-    precioElement.textContent = `$${producto.precio}`;
+    precioElement.textContent = `$${producto.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
     const imagenElement = card.querySelector("#carrito-Imagen");
     imagenElement.src = producto.imagen;
