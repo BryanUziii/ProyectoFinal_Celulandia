@@ -163,4 +163,37 @@ ProductosDb.obtenerTicket = function obtenerTicket(ID) {
   });
 };
 
+// FUNCIONES PARA USUARIOS DEL LADO DEL CLIENTE
+ProductosDb.crearUsuario = function crearUsuario(username, contraseña, telefono, domicilio, email) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = "INSERT INTO Usuarios (Nombre, Contrasena, Telefono, Domicilio, Correo) VALUES (?, ?, ?, ?, ?)";
+    conexion.query(sqlConsulta, [username, contraseña, telefono, domicilio, email], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+};
+
+ProductosDb.iniciarSesion = function iniciarSesion(username, contraseña) {
+  return new Promise((resolve, reject) => {
+    var sqlConsulta = "SELECT ID, Nombre FROM Usuarios WHERE Nombre = ? AND Contrasena = ?";
+    conexion.query(sqlConsulta, [username, contraseña], function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        if (res.length > 0) {
+          resolve(res);
+        } else {
+          reject("Nombre de usuario o contraseña incorrectos");
+        }
+      }
+    });
+  });
+};
+
+
+
 module.exports = ProductosDb; //ESTE SIEMPRE AL FINAL Y NO SE BORRA
